@@ -47,7 +47,7 @@ export default {
   data(){
     return{
       categoryName:'',
-      limit:50,
+      limit:100,
     }
   },
   validations:{
@@ -69,9 +69,12 @@ export default {
             categoryName:this.categoryName,
             limit:this.limit
             });
+        console.log(category)
             this.categoryName='';
             this.limit=100;
             this.$v.$reset()
+            this.$emit('create',category)
+
             this.$message('Котегория создана')
       }
       catch (e){

@@ -54,7 +54,7 @@ export default {
   
   mounted(){
     this.dropdown = window.M.Dropdown.init(this.$refs.dropdown,{
-       constrainWIdth:true,
+       constrainWidth:true,
 })
     this.interval = setInterval(() => {
       this.date = new Date().toLocaleTimeString()
@@ -70,7 +70,7 @@ export default {
   methods:{
     async logOut(){
     await this.$store.dispatch('logout')
-    this.$router.push('/login?message=logout')
+    await this.$router.push('/login?message=logout')
     },
     
 
@@ -80,9 +80,5 @@ export default {
       return this.$store.getters.info.name
     }
   }
- 
-  
-  
-  
 }
 </script>

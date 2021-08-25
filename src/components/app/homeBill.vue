@@ -4,7 +4,7 @@
         <div class="card-content white-text">
           <span class="card-title">Счет в валюте</span>
 
-          <p class="currency-line" v-for="(currency,index) of curencies" :key='index'>
+          <p class="currency-line" v-for="(currency,index) of currencies" :key='index'>
             <span>{{getCurrency(currency)}}</span>
           </p>
         </div>
@@ -17,7 +17,7 @@ export default {
   props:['rates'],
   data(){
     return{
-      curencies:['RUB','EUR','USD']
+      currencies:['RUB','EUR','USD']
     }
   },
 

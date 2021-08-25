@@ -37,8 +37,6 @@ export default {
   },
   async mounted(){
       this.currency = await this.fetchCurrency
-      console.log(this.currency);
-      
       this.loading = false
   },
   computed:{
