@@ -4,7 +4,7 @@
       <h4>Редактировать</h4>
     </div>
 
-    <form>
+    <form @submit.prevent = "submitHandler">
       <div class="input-field">
         <select ref = 'select' v-model = 'current' >
           <option
@@ -63,6 +63,7 @@ export default {
       categoryName :'',
       limit:100,
       current:null,
+
     }
   },
   validations:{
@@ -75,19 +76,45 @@ export default {
     window.M.updateTextFields();
   },
   watch:{
-    current(value){
-      console.log(value)
+    current(catID){
+      const{categoryName,limit} =  this.categories.find(c => c.id ===catID)
+      this.categoryName = categoryName
+      this.limit = limit
     }
   },
-  created(){
-    const {id,categoryName,limit} = this.categories[0]
-    this.current = id
-    this.categoryName = categoryName
-    this.limit = limit
+   created(){
+    if(this.categories){
+      const {id,categoryName,limit} =  this.categories[0]
+      this.current = id
+      this.categoryName = categoryName
+      this.limit = limit
+    }
+
   },
   beforeDestroy() {
     if(this.select && this.select.destroy){
       this.select.destroy()
+    }
+  },
+  methods:{
+    async submitHandler(){
+      if(this.$v.$invalid){
+        this.$v.$touch()
+        return
+      }
+      try{
+        const categoryData = {
+          id:this.current,
+          categoryName:this.categoryName,
+          limit:this.limit,
+        }
+        await this.$store.dispatch('updateCategory',categoryData)
+        this.$message('Категория обновлена')
+        this.$emit('updated',categoryData)
+      }
+      catch(e){
+        console.log()
+      }
     }
   }
 }
