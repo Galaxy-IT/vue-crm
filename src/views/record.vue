@@ -151,7 +151,7 @@ export default{
             categoryID:this.category,
             amount:this.amount,
             descr:this.descr,
-            tyle:this.type,
+            type:this.type,
             date:new Date().toJSON(),
           })
           let bill = this.type ==='income'

@@ -4,7 +4,7 @@
     <h3>Планирование</h3>
     <h4
 
-    >{{ info.bill }}</h4>
+    >{{ info.bill }} P</h4>
   </div>
   <loader
       v-if="loading"
@@ -16,15 +16,19 @@
   <section
   v-else
   >
-    <div>
+    <div 
+    v-for="cat in categories" 
+    :key="cat.id"
+    >
       <p>
-        <strong>Девушка:</strong>
-        12 122 из 14 0000
+        <strong>{{cat.categoryName}}</strong>
+        {{cat.spend}} из {{cat.limit}}
       </p>
       <div class="progress" >
         <div
-            class="determinate green"
-            style="width:40%"
+            class="determinate"
+            :style="{width: cat.progressPercent + '%'}"
+            :class="[cat.progressColor]"
         ></div>
       </div>
     </div>
@@ -44,12 +48,32 @@ export default {
     }
   },
   async mounted(){
-    const record = await this.$store.dispatch('fetchRecords')
+    
     const categories = await this.$store.dispatch('fetchCategories')
+    const records = await this.$store.dispatch('fetchRecords')
+    console.log(records);
+    this.categories = categories.map(cat =>{
+       cat.spend = records
+      .filter(i => i.categoryID === cat.id)
+      .filter(r => r.type ==='outcome')
+      .reduce((total,record) =>{
+        return total += +record.amount
+      },0)
+      cat.percent = 100 * cat.spend / cat.limit
+      cat.progressPercent = cat.percent > 100 ? 100 : cat.percent
+      cat.progressColor = cat.percent < 60 
+      ?"green" 
+      :cat.percent <100 
+        ?"yellow" 
+        : "red"
+        
+        return cat.spend,cat.progressPercent,cat.progressColor,cat
+    })
+    
     this.loading = false
   },
   computed: {
-    ...mapGetters(["info"]),
+    ...mapGetters(["info","records"]),
   },
   components:{loader}
 }
