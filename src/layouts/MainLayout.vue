@@ -23,6 +23,8 @@
 <script>
 import Navbar from '../components/app/navbar.vue'
 import Sidebar from '../components/app/sidebar.vue'
+import messages from '@/utils/messages'
+
 export default {
     components:{Navbar,Sidebar},
     data:()=>({
@@ -32,6 +34,16 @@ export default {
         if(!Object.keys(this.$store.getters.info).length){
             await this.$store.dispatch('fetchInfo')
         }
+    },
+    computed:{
+    error(){
+     return this.$store.getters.error;
     }
+  },
+  watch:{
+    error(fbError){
+      this.$error(messages[fbError.code] || 'что-то пошло не так')
+    }
+  },
 }
 </script>

@@ -24,7 +24,9 @@
         <strong>{{cat.categoryName}}</strong>
         {{cat.spend}} из {{cat.limit}}
       </p>
-      <div class="progress" >
+      <div class="progress" 
+      v-tooltip = "cat.tooltip"
+      >
         <div
             class="determinate"
             :style="{width: cat.progressPercent + '%'}"
@@ -66,8 +68,10 @@ export default {
       :cat.percent <100 
         ?"yellow" 
         : "red"
+      let tooltipValue = cat.limit - cat.spend
+       cat.tooltip = `${tooltipValue <0 ? 'Превышенно на :' : 'Осталось :'} ${Math.abs(tooltipValue)}`
         
-        return cat.spend,cat.progressPercent,cat.progressColor,cat
+        return cat
     })
     
     this.loading = false

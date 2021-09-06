@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import dateFilter from './filters/dateFilter'
 import messagePlugin from './utils/message.plugin'
+import tooltip from './derictives/tooltip'
 
 import loader from './components/app/loader'
 
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 
 Vue.use(Vuelidate)
 Vue.use(messagePlugin)
+Vue.directive('tooltip',tooltip)
 Vue.filter('date',dateFilter)
 
 Vue.component('loader',loader)
