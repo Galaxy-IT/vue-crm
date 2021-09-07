@@ -11,15 +11,15 @@ export default function dateFilter(value, format = 'date'){
     options.minute ='2-digit'
     options.second ='2-digit'
   }
-  // if(format.includes('date-time')){
-  //   options.day=''
-  //   options.month =''
-  //   options.year =''
+  if(format.includes('date-time')){
+    options.day=''
+    options.month =''
+    options.year =''
 
-  //   options.second=''
-  //   options.minutes =''
-  //   options.hours =''
-  // }
-  // return new Intl.DateTimeFormat('ru-RU',options).format(new Date(value))
-  return
+    options.second=''
+    options.minutes =''
+    options.hours =''
+  }
+  return new Intl.DateTimeFormat('ru-RU',options).format(new Date(value))
+  
 }
