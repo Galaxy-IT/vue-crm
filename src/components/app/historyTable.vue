@@ -30,7 +30,7 @@
           <button 
           v-tooltip = "'Посмотреть запись'"
           class="btn-small btn"
-          @click = "$router.push('/details/' + record.id)"
+          @click = "$router.push('/detail-record/?=' + record.id)"
           >
             <i class="material-icons">open_in_new</i>
           </button>
